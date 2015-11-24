@@ -13,7 +13,7 @@ BBLAYERS ?= " \
   /home/user/Yocto/edison-src/out/linux64/poky/meta-intel-iot-middleware \
   /home/user/Yocto/edison-src/meta-intel-edison/meta-intel-arduino \
   /home/user/Yocto/edison-src/meta-arduino \
-  /home/user/Yocto/golang/oe-meta-go \
+  /home/user/Yocto/oe-meta-go \
   /home/user/Yocto/meta-stratux \
   \
   "
