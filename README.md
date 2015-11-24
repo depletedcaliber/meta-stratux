@@ -48,3 +48,12 @@ make edison-image
 ### Flash edison image 
 Files necessary to flash are output to edison-src/out/linux64/build/toFlash. Follow instructions in edison doc acording to the platform that you are going to flash from.
 
+
+
+
+## Notes
+
+This particular image as is contains modifications to the GPS in the following patch. The patch skips the initialization as my GPS has onboard flash that it saves the configuration settings too. Remove this patch to restore regular ry835ai operation.
+```
+recipes-stratux/stratux/files/0003-gps-hardcoding.patch
+```
