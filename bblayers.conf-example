@@ -1,0 +1,23 @@
+# LAYER_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+LCONF_VERSION = "6"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+BBLAYERS ?= " \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta-yocto \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta-yocto-bsp \
+  /home/user/Yocto/edison-src/meta-intel-edison/meta-intel-edison-bsp \
+  /home/user/Yocto/edison-src/meta-intel-edison/meta-intel-edison-distro \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta-intel-iot-middleware \
+  /home/user/Yocto/edison-src/meta-intel-edison/meta-intel-arduino \
+  /home/user/Yocto/edison-src/meta-arduino \
+  /home/user/Yocto/golang/oe-meta-go \
+  /home/user/Yocto/meta-stratux \
+  \
+  "
+BBLAYERS_NON_REMOVABLE ?= " \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta \
+  /home/user/Yocto/edison-src/out/linux64/poky/meta-yocto \
+  "
