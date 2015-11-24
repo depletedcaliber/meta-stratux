@@ -1,0 +1,13 @@
+diff --git a/main/gen_gdl90.go b/main/gen_gdl90.go
+index 57103a0..a49b55c 100644
+--- a/main/gen_gdl90.go
++++ b/main/gen_gdl90.go
+@@ -447,7 +447,7 @@ func cpuTempMonitor() {
+ 		// Update CPUTemp.
+ 		globalStatus.CPUTemp = float32(-99.0) // Default value - in case code below hangs.
+ 
+-		temp, err := ioutil.ReadFile("/sys/class/thermal/thermal_zone0/temp")
++		temp, err := ioutil.ReadFile("/sys/class/thermal/thermal_zone3/temp")
+ 		tempStr := strings.Trim(string(temp), "\n")
+ 		if err == nil {
+ 			tInt, err := strconv.Atoi(tempStr)

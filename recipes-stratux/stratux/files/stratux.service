@@ -1,0 +1,16 @@
+[Unit]
+Description=Stratux daemon service
+Requires=sys-subsystem-net-devices-wlan0.device udhcpd-for-hostapd.service
+After=sys-subsystem-net-devices-wlan0.device udhcpd-for-hostapd.service
+
+[Service]
+Type=simple
+
+
+# start the service hostapd
+ExecStart=/usr/bin/start_uat.sh
+
+
+[Install]
+WantedBy=multi-user.target
+

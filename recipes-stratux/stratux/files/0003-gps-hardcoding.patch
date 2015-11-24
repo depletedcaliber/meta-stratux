@@ -1,0 +1,118 @@
+diff --git a/main/ry835ai.go b/main/ry835ai.go
+index d12aa14..107c363 100644
+--- a/main/ry835ai.go
++++ b/main/ry835ai.go
+@@ -102,10 +102,10 @@ func initGPSSerial() bool {
+ 	if _, err := os.Stat("/dev/ttyACM0"); err == nil {
+ 		device = "/dev/ttyACM0"
+ 	} else {
+-		device = "/dev/ttyAMA0"
++		device = "/dev/ttyMFD1"
+ 	}
+ 	log.Printf("Using %s for GPS\n", device)
+-	serialConfig = &serial.Config{Name: device, Baud: 115200}
++	serialConfig = &serial.Config{Name: device, Baud: 38400}
+ 	p, err := serial.OpenPort(serialConfig)
+ 	if err != nil {
+ 		log.Printf("serial port err: %s\n", err.Error())
+@@ -114,7 +114,7 @@ func initGPSSerial() bool {
+ 
+ 	serialPort = p
+ 	// Open port at 9600 baud for config.
+-	serialConfig = &serial.Config{Name: device, Baud: 9600}
++	serialConfig = &serial.Config{Name: device, Baud: 38400}
+ 	p, err = serial.OpenPort(serialConfig)
+ 	if err != nil {
+ 		log.Printf("serial port err: %s\n", err.Error())
+@@ -122,7 +122,7 @@ func initGPSSerial() bool {
+ 	}
+ 
+ 	// Set 10Hz update.
+-	p.Write(makeUBXCFG(0x06, 0x08, 6, []byte{0x64, 0x00, 0x00, 0x01, 0x00, 0x01}))
++	//p.Write(makeUBXCFG(0x06, 0x08, 6, []byte{0x64, 0x00, 0x00, 0x01, 0x00, 0x01}))
+ 
+ 	// Set navigation settings.
+ 	nav := make([]byte, 36)
+@@ -132,7 +132,7 @@ func initGPSSerial() bool {
+ 	nav[2] = 0x07 // "Airborne with >2g Acceleration".
+ 	nav[3] = 0x02 // 3D only.
+ 
+-	p.Write(makeUBXCFG(0x06, 0x24, 36, nav))
++	//p.Write(makeUBXCFG(0x06, 0x24, 36, nav))
+ 
+ 	// Reconfigure serial port.
+ 	cfg := make([]byte, 20)
+@@ -169,7 +169,7 @@ func initGPSSerial() bool {
+ 	cfg[18] = 0x00 //pad.
+ 	cfg[19] = 0x00 //pad.
+ 
+-	p.Write(makeUBXCFG(0x06, 0x00, 20, cfg))
++	//p.Write(makeUBXCFG(0x06, 0x00, 20, cfg))
+ 
+ 	p.Close()
+ 
+@@ -232,12 +232,12 @@ func processNMEALine(l string) bool {
+ 		mySituation.lastFixSinceMidnightUTC = uint32((hr * 60 * 60) + (min * 60) + sec)
+ 
+ 		// Latitude.
+-		if len(x[2]) < 10 {
++		if len(x[2]) < 9 {
+ 			return false
+ 		}
+ 
+ 		hr, err1 = strconv.Atoi(x[2][0:2])
+-		minf, err2 := strconv.ParseFloat(x[2][2:10], 32)
++		minf, err2 := strconv.ParseFloat(x[2][2:9], 32)
+ 		if err1 != nil || err2 != nil {
+ 			return false
+ 		}
+@@ -248,11 +248,11 @@ func processNMEALine(l string) bool {
+ 		}
+ 
+ 		// Longitude.
+-		if len(x[4]) < 11 {
++		if len(x[4]) < 10 {
+ 			return false
+ 		}
+ 		hr, err1 = strconv.Atoi(x[4][0:3])
+-		minf, err2 = strconv.ParseFloat(x[4][3:11], 32)
++		minf, err2 = strconv.ParseFloat(x[4][3:10], 32)
+ 		if err1 != nil || err2 != nil {
+ 			return false
+ 		}
+@@ -318,6 +318,7 @@ func processNMEALine(l string) bool {
+ 		mySituation.LastFixLocalTime = time.Now()
+ 
+ 	} else if (x[0] == "$GNRMC") || (x[0] == "$GPRMC") {
++                //$GPRMC,235650.700,A,3854.9903,N,07731.4290,W,000.0,000.0,201115,,,A*7E
+ 		//$GPRMC,123519,A,4807.038,N,01131.000,E,022.4,084.4,230394,003.1,W*6A
+ 		/*						check RY835 man for NMEA version, if >2.2, add mode field
+ 				Where:
+@@ -372,11 +373,11 @@ func processNMEALine(l string) bool {
+ 		}
+ 
+ 		// Latitude.
+-		if len(x[3]) < 10 {
++		if len(x[3]) < 9 {
+ 			return false
+ 		}
+ 		hr, err1 = strconv.Atoi(x[3][0:2])
+-		minf, err2 := strconv.ParseFloat(x[3][2:10], 32)
++		minf, err2 := strconv.ParseFloat(x[3][2:9], 32)
+ 		if err1 != nil || err2 != nil {
+ 			return false
+ 		}
+@@ -385,11 +386,11 @@ func processNMEALine(l string) bool {
+ 			mySituation.Lat = -mySituation.Lat
+ 		}
+ 		// Longitude.
+-		if len(x[5]) < 11 {
++		if len(x[5]) < 10 {
+ 			return false
+ 		}
+ 		hr, err1 = strconv.Atoi(x[5][0:3])
+-		minf, err2 = strconv.ParseFloat(x[5][3:11], 32)
++		minf, err2 = strconv.ParseFloat(x[5][3:10], 32)
+ 		if err1 != nil || err2 != nil {
+ 			return false
+ 		}
