@@ -62,7 +62,7 @@ do_install() {
     install -m 0755 ${S}/init.d-stratux ${D}${sysconfdir}/init.d
     install -m 0755 ${S}/start_stratux.sh ${D}${sbindir}
    
-        install -m 0755 -d ${D}/var/www ${D}/var/www/css ${D}/var/www/js ${D}/var/www/img ${D}/var/www/maui ${D}/var/www/maui/js ${D}/var/www/maui/css ${D}/var/www/maui/fonts ${D}/var/www/plates ${D}/var/www/plates/js
+        install -m 0755 -d ${D}/var/www ${D}/var/www/css ${D}/var/www/js ${D}/var/www/img ${D}/var/www/maui ${D}/var/www/maui/js ${D}/var/www/maui/css ${D}/var/www/maui/fonts ${D}/var/www/plates ${D}/var/www/plates/js ${D}/var/lib/dhcp
 	install -m 0755 ${S}/web/css/*.css ${D}/var/www/css
 	install -m 0755 ${S}/web/js/main.js ${D}/var/www/js
 	install -m 0755 ${S}/web/js/addtohomescreen.min.js ${D}/var/www/js
