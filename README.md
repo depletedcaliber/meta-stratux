@@ -3,7 +3,7 @@ Yocto layer for building a stratux image
 
 
 ## How to use
-### Acquire Edison Source and extract
+### Acquire Edison build environment and extract
 ```
 wget -c http://downloadmirror.intel.com/25028/eng/edison-src-ww25.5-15.tgz
 tar xzf edison-src-ww25.5-15.tgz
